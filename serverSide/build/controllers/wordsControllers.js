@@ -22,17 +22,30 @@ const getWords = async (req, res, next) => {
     }
 };
 exports.getWords = getWords;
-const isCorrect = (req, res, next) => {
-    const { wordId } = req.body;
-    console.log(wordId);
+const isCorrect = async (req, res, next) => {
+    // request data
+    const { answer } = req.body;
+    let wordId = parseInt(req.body.wordId);
+    console.log({ answer, wordId });
     try {
-        if (!wordId) {
-            throw new AppError_1.default('Bad Request 🧐 Please provide a valid word ID number', 400);
+        if (!wordId || !answer) {
+            throw new AppError_1.default('Bad Request 🧐 Please provide a valid word ID number and answer', 400);
         }
-        res.send({
-            wordId,
-            message: 'Is Correct True = Correct 🎉 \n false = Not Correct 😥',
-        });
+        // get the words list from the DB
+        const wordsList = JSON.parse(await promises_1.default.readFile(config_1.dataPath, 'utf-8')).wordList;
+        // get the required Word usind wordId from the request
+        const currentWord = wordsList.find((word) => word.id === wordId);
+        if (!currentWord) {
+            throw new AppError_1.default('Bad Request Wrong word ID', 400);
+        }
+        console.log(currentWord);
+        const isCorrect = currentWord.pos === answer ? true : false;
+        if (isCorrect) {
+            res.send('Correct');
+        }
+        else {
+            res.send('Not Correct');
+        }
     }
     catch (error) {
         next(error);
