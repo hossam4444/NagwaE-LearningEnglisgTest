@@ -17,7 +17,8 @@ const getMyRank = async (req, res, next) => {
         const data = await promises_1.default.readFile(config_1.dataPath, 'utf-8');
         const scoresList = JSON.parse(data).scoresList;
         const rank = (0, helpers_1.calcRank)(finalScore, scoresList);
-        res.send({ Score: finalScore, Rank: rank });
+        console.log({ finalScore, rank });
+        res.send({ rank });
     }
     catch (err) {
         next(new AppError_1.default('That Error Occurred 👉🏼 ' + err, 404));
