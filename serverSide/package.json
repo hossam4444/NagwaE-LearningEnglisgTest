@@ -4,8 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon --exec ts-node ./src/app.ts",
-    "lint": "eslint . --ext .ts"
+    "start": "npx tsc && node build/app.js",
+    "dev:server": "nodemon --exec ts-node ./src/app.ts",
+    "lint": "eslint . --ext .ts",
+    "build": "tsc",
+    "prepublishOnly": "npm run lint"
   },
   "author": "Hossam Tarek",
   "license": "ISC",
