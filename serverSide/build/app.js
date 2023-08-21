@@ -18,7 +18,7 @@ app.use('/rank', rankRoutes_1.default);
 // Global error handler
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
-    res.status(statusCode).send({
+    res.sendStatus(statusCode).send({
         status: statusCode,
         message: err?.message || 'Internal Server Error!',
         errors: err?.errors || [],
