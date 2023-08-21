@@ -47,13 +47,6 @@ const isCorrect = async (req: Request, res: Response, next: NextFunction) => {
 
     console.log(currentWord);
     const isCorrect = currentWord.pos === answer ? true : false;
-
-    // let allData = {
-    //   wordId,
-    //   currentWord,
-    //   isCorrect,
-    //   wordsList,
-    // };
     if (isCorrect) {
       res.send('Correct');
     } else {
